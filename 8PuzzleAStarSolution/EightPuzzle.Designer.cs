@@ -1,6 +1,8 @@
-﻿namespace EightPuzzleProblem
+﻿using System.Windows.Forms;
+
+namespace EightPuzzleAStarSolution
 {
-    partial class Game
+    partial class EightPuzzle
     {
         /// <summary>
         ///  Required designer variable.
@@ -31,6 +33,7 @@
             components = new System.ComponentModel.Container();
             btnClose = new FontAwesome.Sharp.IconButton();
             panel = new Panel();
+            btn0 = new Button();
             btn8 = new Button();
             btn7 = new Button();
             btn6 = new Button();
@@ -45,7 +48,6 @@
             lblRestart = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
             lblTimer = new Label();
-            btn0 = new Button();
             panel.SuspendLayout();
             SuspendLayout();
             // 
@@ -82,6 +84,19 @@
             panel.Name = "panel";
             panel.Size = new Size(593, 593);
             panel.TabIndex = 1;
+            // 
+            // btn0
+            // 
+            btn0.BackColor = SystemColors.WindowText;
+            btn0.FlatAppearance.BorderSize = 0;
+            btn0.FlatStyle = FlatStyle.Flat;
+            btn0.Font = new Font("Segoe UI", 22F);
+            btn0.ForeColor = SystemColors.InactiveCaptionText;
+            btn0.Location = new Point(395, 395);
+            btn0.Name = "btn0";
+            btn0.Size = new Size(190, 190);
+            btn0.TabIndex = 9;
+            btn0.UseVisualStyleBackColor = false;
             // 
             // btn8
             // 
@@ -209,7 +224,6 @@
             btnStart.TabIndex = 2;
             btnStart.TextAlign = ContentAlignment.BottomCenter;
             btnStart.UseVisualStyleBackColor = true;
-            btnStart.Click += GameControlButton_Click;
             // 
             // btnRestart
             // 
@@ -225,7 +239,6 @@
             btnRestart.TabIndex = 3;
             btnRestart.TextAlign = ContentAlignment.BottomCenter;
             btnRestart.UseVisualStyleBackColor = true;
-            btnRestart.Click += GameControlButton_Click;
             // 
             // lblStart
             // 
@@ -257,20 +270,7 @@
             lblTimer.TabIndex = 6;
             lblTimer.Text = "00:00";
             // 
-            // btn0
-            // 
-            btn0.BackColor = SystemColors.WindowText;
-            btn0.FlatAppearance.BorderSize = 0;
-            btn0.FlatStyle = FlatStyle.Flat;
-            btn0.Font = new Font("Segoe UI", 22F);
-            btn0.ForeColor = SystemColors.InactiveCaptionText;
-            btn0.Location = new Point(395, 395);
-            btn0.Name = "btn0";
-            btn0.Size = new Size(190, 190);
-            btn0.TabIndex = 9;
-            btn0.UseVisualStyleBackColor = false;
-            // 
-            // Game
+            // EightPuzzle
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -285,9 +285,9 @@
             Controls.Add(btnClose);
             ForeColor = SystemColors.ControlLightLight;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Game";
+            Name = "EightPuzzle";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "8 Puzzle Game";           
+            Text = "EightPuzzleGame";
             panel.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
