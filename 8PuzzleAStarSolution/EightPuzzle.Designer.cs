@@ -109,7 +109,7 @@ namespace EightPuzzleAStarSolution
             btn8.Name = "btn8";
             btn8.Size = new Size(190, 190);
             btn8.TabIndex = 8;
-            btn8.Text = "8";
+            btn8.Text = "";
             btn8.UseVisualStyleBackColor = false;
             // 
             // btn7
@@ -123,7 +123,7 @@ namespace EightPuzzleAStarSolution
             btn7.Name = "btn7";
             btn7.Size = new Size(190, 190);
             btn7.TabIndex = 6;
-            btn7.Text = "7";
+            btn7.Text = "";
             btn7.UseVisualStyleBackColor = false;
             // 
             // btn6
@@ -137,7 +137,7 @@ namespace EightPuzzleAStarSolution
             btn6.Name = "btn6";
             btn6.Size = new Size(190, 190);
             btn6.TabIndex = 5;
-            btn6.Text = "6";
+            btn6.Text = "";
             btn6.UseVisualStyleBackColor = false;
             // 
             // btn5
@@ -151,7 +151,7 @@ namespace EightPuzzleAStarSolution
             btn5.Name = "btn5";
             btn5.Size = new Size(190, 190);
             btn5.TabIndex = 4;
-            btn5.Text = "5";
+            btn5.Text = "";
             btn5.UseVisualStyleBackColor = false;
             // 
             // btn4
@@ -165,7 +165,7 @@ namespace EightPuzzleAStarSolution
             btn4.Name = "btn4";
             btn4.Size = new Size(190, 190);
             btn4.TabIndex = 3;
-            btn4.Text = "4";
+            btn4.Text = "";
             btn4.UseVisualStyleBackColor = false;
             // 
             // btn3
@@ -179,7 +179,7 @@ namespace EightPuzzleAStarSolution
             btn3.Name = "btn3";
             btn3.Size = new Size(190, 190);
             btn3.TabIndex = 2;
-            btn3.Text = "3";
+            btn3.Text = "";
             btn3.UseVisualStyleBackColor = false;
             // 
             // btn2
@@ -193,7 +193,7 @@ namespace EightPuzzleAStarSolution
             btn2.Name = "btn2";
             btn2.Size = new Size(190, 190);
             btn2.TabIndex = 1;
-            btn2.Text = "2";
+            btn2.Text = "";
             btn2.UseVisualStyleBackColor = false;
             // 
             // btn1
@@ -207,7 +207,7 @@ namespace EightPuzzleAStarSolution
             btn1.Name = "btn1";
             btn1.Size = new Size(190, 190);
             btn1.TabIndex = 0;
-            btn1.Text = "1";
+            btn1.Text = "";
             btn1.UseVisualStyleBackColor = false;
             // 
             // btnStart
