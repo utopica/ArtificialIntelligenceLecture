@@ -161,9 +161,9 @@ namespace GeneticAlgorithm
             panel1.Controls.Add(label9);
             panel1.Controls.Add(label8);
             panel1.ForeColor = SystemColors.ButtonHighlight;
-            panel1.Location = new Point(59, 214);
+            panel1.Location = new Point(59, 363);
             panel1.Name = "panel1";
-            panel1.Size = new Size(829, 253);
+            panel1.Size = new Size(829, 364);
             panel1.TabIndex = 11;
             // 
             // label10
@@ -214,7 +214,7 @@ namespace GeneticAlgorithm
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaptionText;
-            ClientSize = new Size(995, 501);
+            ClientSize = new Size(995, 768);
             Controls.Add(button1);
             Controls.Add(panel1);
             Controls.Add(textBox5);

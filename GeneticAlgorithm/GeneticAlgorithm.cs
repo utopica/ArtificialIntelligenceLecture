@@ -16,6 +16,8 @@ namespace GeneticAlgorithm
         private Random random;
         private Chromosome bestSolution;
         private List<double> bestFitnessHistory;
+        private List<double> bestXHistory;
+        private List<double> bestYHistory;
 
         public GeneticAlgorithm(int populationSize, double crossoverRate, double mutationRate, int eliteSize, int generationCount)
         {
@@ -26,6 +28,8 @@ namespace GeneticAlgorithm
             this.generationCount = generationCount;
             this.random = new Random();
             this.bestFitnessHistory = new List<double>();
+            this.bestXHistory = new List<double>();
+            this.bestYHistory = new List<double>();
         }
 
         public void Solve()
@@ -40,7 +44,7 @@ namespace GeneticAlgorithm
                     chromosome.Fitness = CalculateFitness(chromosome.X, chromosome.Y);
                 }
 
-                population.Sort((x, y) => x.Fitness.CompareTo(y.Fitness));
+                population.Sort((x, y) => x.Fitness.CompareTo(y.Fitness)); 
 
                 if (bestSolution == null || population[0].Fitness < bestSolution.Fitness)
                 {
@@ -49,6 +53,8 @@ namespace GeneticAlgorithm
                 }
 
                 bestFitnessHistory.Add(bestSolution.Fitness);
+                bestXHistory.Add(bestSolution.X);
+                bestYHistory.Add(bestSolution.Y);
 
                 List<Chromosome> elites = new List<Chromosome>();
                 for (int j = 0; j < eliteSize && j < population.Count; j++)
@@ -83,8 +89,8 @@ namespace GeneticAlgorithm
             List<Chromosome> population = new List<Chromosome>();
             for (int i = 0; i < populationSize; i++)
             {
-                double x = random.NextDouble() * 20 - 10;
-                double y = random.NextDouble() * 20 - 10;
+                double x = random.NextDouble() * 4 - 2;
+                double y = random.NextDouble() * 4 - 2;
                 population.Add(new Chromosome(x, y));
             }
             return population;
@@ -94,19 +100,27 @@ namespace GeneticAlgorithm
         {
             if (random.NextDouble() < mutationRate)
             {
-                chromosome.X += (random.NextDouble() * 2 - 1) * 2;
-                chromosome.X = Math.Max(-10, Math.Min(10, chromosome.X));
+                chromosome.X += (random.NextDouble() * 2 - 1) * 0.4;
+                chromosome.X = Math.Max(-2, Math.Min(2, chromosome.X));
             }
             if (random.NextDouble() < mutationRate)
             {
-                chromosome.Y += (random.NextDouble() * 2 - 1) * 2;
-                chromosome.Y = Math.Max(-10, Math.Min(10, chromosome.Y));
+                chromosome.Y += (random.NextDouble() * 2 - 1) * 0.4;
+                chromosome.Y = Math.Max(-2, Math.Min(2, chromosome.Y));
             }
         }
 
         public Chromosome GetBestSolution
         {
-            get { return bestSolution; }
+            get 
+            { 
+                if (bestSolution == null) return null;
+                
+                return new Chromosome(bestSolution.X, bestSolution.Y) 
+                { 
+                    Fitness = bestSolution.Fitness 
+                };
+            }
         }
         private Chromosome SelectParent(List<Chromosome> population)
         {
@@ -144,14 +158,23 @@ namespace GeneticAlgorithm
             return bestFitnessHistory;
         }
 
+        public List<double> GetBestXHistory()
+        {
+            return bestXHistory;
+        }
+
+        public List<double> GetBestYHistory()
+        {
+            return bestYHistory;
+        }
+
         private double CalculateFitness(double x, double y)
         {
-
-            x = Math.Max(-10, Math.Min(10, x));
-            y = Math.Max(-10, Math.Min(10, y));
+            x = Math.Max(-2, Math.Min(2, x));
+            y = Math.Max(-2, Math.Min(2, y));
 
             return (1 + Math.Pow((x + y + 1), 2) * (19 - 14 * x + 3 * Math.Pow(x, 2) - 14 * y + 6 * x * y + 3 * Math.Pow(y, 2))) *
-                  (30 + Math.Pow((2 * x - 3 * y), 2) * (18 - 32 * x + 12 * Math.Pow(x, 2) + 48 * y - 36 * x * y + 27 * Math.Pow(y, 2)));
+                   (30 + Math.Pow((2 * x - 3 * y), 2) * (18 - 32 * x + 12 * Math.Pow(x, 2) + 48 * y - 36 * x * y + 27 * Math.Pow(y, 2)));
         }
     }
 }

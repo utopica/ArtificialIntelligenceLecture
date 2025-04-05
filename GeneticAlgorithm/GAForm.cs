@@ -22,62 +22,71 @@ namespace GeneticAlgorithm
 
         private void DisplayResults()
         {
+            panel1.Controls.Clear();
+            
             Panel resultsPanel = new Panel();
             resultsPanel.BackColor = Color.Transparent;
             resultsPanel.BorderStyle = BorderStyle.FixedSingle;
             resultsPanel.Width = 250;
             resultsPanel.Height = 120;
-            resultsPanel.Location = new Point(10, 10);
-            panel1.Controls.Add(resultsPanel);
+            resultsPanel.Location = new Point(397, 224);
+            this.Controls.Add(resultsPanel);
 
             Chromosome bestSolution = geneticAlgorithm.GetBestSolution;
+            if (bestSolution != null)
+            {
+                Label labelTitle = new Label();
+                labelTitle.Text = "Optimizasyon Sonuçları";
+                labelTitle.ForeColor = Color.White;
+                labelTitle.BackColor = Color.Transparent;
+                labelTitle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+                labelTitle.AutoSize = true;
+                labelTitle.Location = new Point(10, 10);
+                resultsPanel.Controls.Add(labelTitle);
 
-            Label labelTitle = new Label();
-            labelTitle.Text = "Optimizasyon Sonuçları";
-            labelTitle.ForeColor = Color.White;
-            labelTitle.BackColor = Color.Transparent;
-            labelTitle.Font = new Font("Segoe UI", 10, FontStyle.Bold);
-            labelTitle.AutoSize = true;
-            labelTitle.Location = new Point(10, 10);
-            resultsPanel.Controls.Add(labelTitle);
+                Label labelX = new Label();
+                labelX.Text = $"X = {bestSolution.X:F4}";
+                labelX.ForeColor = Color.White;
+                labelX.BackColor = Color.Transparent;
+                labelX.Font = new Font("Segoe UI", 9);
+                labelX.AutoSize = true;
+                labelX.Location = new Point(10, 35);
+                resultsPanel.Controls.Add(labelX);
 
-            Label labelX = new Label();
-            labelX.Text = $"X = {bestSolution.X:F4}";
-            labelX.ForeColor = Color.White;
-            labelX.BackColor = Color.Transparent;
-            labelX.Font = new Font("Segoe UI", 9);
-            labelX.AutoSize = true;
-            labelX.Location = new Point(10, 35);
-            resultsPanel.Controls.Add(labelX);
+                Label labelY = new Label();
+                labelY.Text = $"Y = {bestSolution.Y:F4}";
+                labelY.ForeColor = Color.White;
+                labelY.BackColor = Color.Transparent;
+                labelY.Font = new Font("Segoe UI", 9);
+                labelY.AutoSize = true;
+                labelY.Location = new Point(10, 60);
+                resultsPanel.Controls.Add(labelY);
 
-            Label labelY = new Label();
-            labelY.Text = $"Y = {bestSolution.Y:F4}";
-            labelY.ForeColor = Color.White;
-            labelY.BackColor = Color.Transparent;
-            labelY.Font = new Font("Segoe UI", 9);
-            labelY.AutoSize = true;
-            labelY.Location = new Point(10, 60);
-            resultsPanel.Controls.Add(labelY);
-
-            Label labelFitness = new Label();
-            labelFitness.Text = $"Amaç Fonksiyon Değeri: {bestSolution.Fitness:F4}";
-            labelFitness.ForeColor = Color.White;
-            labelFitness.BackColor = Color.Transparent;
-            labelFitness.Font = new Font("Segoe UI", 9);
-            labelFitness.AutoSize = true;
-            labelFitness.Location = new Point(10, 85);
-            resultsPanel.Controls.Add(labelFitness);
+                Label labelFitness = new Label();
+                labelFitness.Text = $"Amaç Fonksiyon Değeri: {bestSolution.Fitness:F4}";
+                labelFitness.ForeColor = Color.White;
+                labelFitness.BackColor = Color.Transparent;
+                labelFitness.Font = new Font("Segoe UI", 9);
+                labelFitness.AutoSize = true;
+                labelFitness.Location = new Point(10, 85);
+                resultsPanel.Controls.Add(labelFitness);
+            }
 
             PlotFitnessHistory(panel1);
         }
 
         private void PlotFitnessHistory(Panel panel)
         {
-            
+            List<double> bestFitnessHistory = geneticAlgorithm.GetBestFitnessHistory();
+            List<Point> dataPoints = new List<Point>();
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
+
             panel.Paint += new PaintEventHandler((sender, e) =>
             {
-                List<double> bestFitnessHistory = geneticAlgorithm.GetBestFitnessHistory();
-
                 if (bestFitnessHistory == null || bestFitnessHistory.Count < 2)
                     return;
 
@@ -89,33 +98,34 @@ namespace GeneticAlgorithm
                 int graphWidth = xAxisEnd - xAxisStart;
                 int graphHeight = yAxisStart - yAxisEnd;
 
-                using (Pen axisPen = new Pen(Color.Black, 2))
+                using (Pen axisPen = new Pen(Color.White, 2))
                 using (Pen gridPen = new Pen(Color.LightGray, 1) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash })
-                using (Pen linePen = new Pen(Color.AliceBlue, 2))
-                using (Brush textBrush = new SolidBrush(Color.Black))
+                using (Pen linePen = new Pen(Color.Red, 2))
+                using (Brush textBrush = new SolidBrush(Color.White))
                 using (Brush titleBrush = new SolidBrush(Color.White))
                 using (Font axisFont = new Font("Arial", 8))
                 using (Font titleFont = new Font("Arial", 12, FontStyle.Bold))
                 using (StringFormat formatRight = new StringFormat { Alignment = StringAlignment.Far })
                 using (StringFormat formatCenter = new StringFormat { Alignment = StringAlignment.Center })
                 {
-                    e.Graphics.DrawString("", titleFont, titleBrush,
-                    new Rectangle(xAxisStart, 10, graphWidth, 30), formatCenter);
+                    // Başlık
+                    e.Graphics.DrawString("Yakınsama Grafiği", titleFont, titleBrush,
+                        new Rectangle(xAxisStart, 10, graphWidth, 30), formatCenter);
 
-                    e.Graphics.DrawLine(axisPen, xAxisStart, yAxisStart, xAxisEnd, yAxisStart); 
+                    // Eksenler
+                    e.Graphics.DrawLine(axisPen, xAxisStart, yAxisStart, xAxisEnd, yAxisStart);
                     e.Graphics.DrawLine(axisPen, xAxisStart, yAxisStart, xAxisStart, yAxisEnd);
 
                     double minFitness = bestFitnessHistory.Min();
                     double maxFitness = bestFitnessHistory.Max();
                     double range = maxFitness - minFitness;
-
                     double padding = range * 0.1;
-                    double yMin = Math.Max(0, minFitness - padding); 
+                    double yMin = Math.Max(0, minFitness - padding);
                     double yMax = maxFitness + padding;
 
+                    // Izgara çizgileri ve etiketler
                     int xGridCount = 10;
                     int yGridCount = 5;
-
 
                     for (int i = 0; i <= xGridCount; i++)
                     {
@@ -142,78 +152,72 @@ namespace GeneticAlgorithm
 
                         e.Graphics.DrawLine(axisPen, xAxisStart - 5, y, xAxisStart, y);
 
-                        string valueLabel = value < 1000 ? value.ToString("F1") : value.ToString("E2");
+                        string valueLabel = value.ToString("F2");
                         e.Graphics.DrawString(valueLabel, axisFont, textBrush,
                             xAxisStart - 8, y - 6, formatRight);
                     }
 
-                    e.Graphics.DrawString("Generation", axisFont, textBrush,
+                    // Eksen etiketleri
+                    e.Graphics.DrawString("Jenerasyon", axisFont, textBrush,
                         new Rectangle(xAxisStart, yAxisStart + 25, graphWidth, 20), formatCenter);
 
                     e.Graphics.TranslateTransform(xAxisStart - 35, yAxisStart / 2);
                     e.Graphics.RotateTransform(-90);
-                    e.Graphics.DrawString("Fitness Value", axisFont, textBrush, 0, 0);
+                    e.Graphics.DrawString("Fitness Değeri", axisFont, textBrush, 0, 0);
                     e.Graphics.ResetTransform();
 
+                    // Veri noktaları ve çizgi
                     if (bestFitnessHistory.Count > 1)
                     {
-                        Point[] points = new Point[bestFitnessHistory.Count];
-
+                        dataPoints.Clear();
                         for (int i = 0; i < bestFitnessHistory.Count; i++)
                         {
                             double normalizedX = (double)i / (bestFitnessHistory.Count - 1);
                             double normalizedY = (bestFitnessHistory[i] - yMin) / (yMax - yMin);
-
                             int x = xAxisStart + (int)(normalizedX * graphWidth);
                             int y = yAxisStart - (int)(normalizedY * graphHeight);
-
-                            y = Math.Max(yAxisEnd, Math.Min(yAxisStart, y));
-
-                            points[i] = new Point(x, y);
+                            dataPoints.Add(new Point(x, y));
                         }
 
-                        if (points.Length > 2)
-                        {
-                            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                            e.Graphics.DrawLines(linePen, points);
-                        }
+                        e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                        e.Graphics.DrawLines(linePen, dataPoints.ToArray());
 
-                        int pointSize = 5;
-                        using (Brush pointBrush = new SolidBrush(Color.Red))
+                        // Veri noktalarını göster ve tooltip ekle
+                        using (Brush pointBrush = new SolidBrush(Color.Yellow))
                         {
-                            for (int i = 0; i < points.Length; i += Math.Max(1, points.Length / 20)) 
+                            for (int i = 0; i < dataPoints.Count; i += Math.Max(1, dataPoints.Count / 20))
                             {
-                                e.Graphics.FillEllipse(pointBrush,
-                                    points[i].X - pointSize / 2,
-                                    points[i].Y - pointSize / 2,
-                                    pointSize, pointSize);
+                                Point p = dataPoints[i];
+                                Rectangle pointArea = new Rectangle(p.X - 5, p.Y - 5, 10, 10);
+                                e.Graphics.FillEllipse(pointBrush, pointArea);
+                                
+                                // Her nokta için ayrı tooltip
+                                string tooltipText = $"Jenerasyon: {i}\nFitness: {bestFitnessHistory[i]:F4}";
+                                toolTip.SetToolTip(panel, tooltipText);
                             }
-
-                            e.Graphics.FillEllipse(pointBrush,
-                                points[0].X - pointSize / 2,
-                                points[0].Y - pointSize / 2,
-                                pointSize, pointSize);
-
-                            e.Graphics.FillEllipse(pointBrush,
-                                points[points.Length - 1].X - pointSize / 2,
-                                points[points.Length - 1].Y - pointSize / 2,
-                                pointSize, pointSize);
                         }
-
-                        string bestFitness = $"Best: {bestFitnessHistory.Min():F3}";
-                        e.Graphics.DrawString(bestFitness,
-                            new Font("Arial", 9, FontStyle.Bold),
-                            new SolidBrush(Color.Green),
-                            xAxisEnd - 80, yAxisEnd + 10);
                     }
                 }
-               
             });
+
+            // Mouse move event handler ekle
+            panel.MouseMove += (sender, e) =>
+            {
+                foreach (Point p in dataPoints)
+                {
+                    Rectangle pointArea = new Rectangle(p.X - 5, p.Y - 5, 10, 10);
+                    if (pointArea.Contains(e.Location))
+                    {
+                        int index = dataPoints.IndexOf(p);
+                        string tooltipText = $"Jenerasyon: {index}\nFitness: {bestFitnessHistory[index]:F4}";
+                        toolTip.SetToolTip(panel, tooltipText);
+                        break;
+                    }
+                }
+            };
 
             panel.Invalidate();
         }
-
-
 
         private void button1_Click(object sender, EventArgs e)
         {
