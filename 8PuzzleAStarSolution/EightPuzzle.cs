@@ -262,6 +262,14 @@ namespace EightPuzzleAStarSolution
                     MessageBox.Show("Geçersiz başlangıç durumu! Lütfen 1'den 8'e kadar olan tüm sayıların ve bir boş hücrenin olduğundan emin olun.");
                     return;
                 }
+                
+                if (!IsSolvable())
+                {
+                    MessageBox.Show("Bu başlangıç durumu çözülemez. Lütfen farklı bir düzenleme deneyin.\n(Not: Inversion sayısı tek olduğu için çözümsüz.)", "Çözülemez Puzzle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    lblTimer.Text = "Çözülemez durum!";
+                    return;
+                }
+
 
                 btnStart.Enabled = false;
                 btnRestart.Enabled = false;
@@ -555,6 +563,32 @@ namespace EightPuzzleAStarSolution
             }
             return sb.ToString();
         }
+        
+        private bool IsSolvable()
+        {
+            List<int> flatBoard = new List<int>();
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    if (board[i, j] != 0) 
+                        flatBoard.Add(board[i, j]);
+                }
+            }
+
+            int inversions = 0;
+            for (int i = 0; i < flatBoard.Count - 1; i++)
+            {
+                for (int j = i + 1; j < flatBoard.Count; j++)
+                {
+                    if (flatBoard[i] > flatBoard[j])
+                        inversions++;
+                }
+            }
+
+            return inversions % 2 == 0;
+        }
+
 
     }
 }
