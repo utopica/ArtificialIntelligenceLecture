@@ -254,13 +254,18 @@ namespace GeneticAlgorithm
                 return;
             }
 
+            panel1.Controls.Clear();
+            foreach (Control control in this.Controls)
+            {
+                if (control is Panel && control != panel1)
+                {
+                    this.Controls.Remove(control);
+                }
+            }
+
             geneticAlgorithm = new GeneticAlgorithm(populationSize, crossoverRate, mutationRate, eliteSize, generationCount);
-
             geneticAlgorithm.Solve();
-
             DisplayResults();
-
-            PlotFitnessHistory(panel1);
         }
 
         private void GAForm_Load(object sender, EventArgs e)

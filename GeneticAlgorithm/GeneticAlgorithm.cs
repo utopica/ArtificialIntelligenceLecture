@@ -16,8 +16,6 @@ namespace GeneticAlgorithm
         private Random random;
         private Chromosome bestSolution;
         private List<double> bestFitnessHistory;
-        private List<double> bestXHistory;
-        private List<double> bestYHistory;
 
         public GeneticAlgorithm(int populationSize, double crossoverRate, double mutationRate, int eliteSize, int generationCount)
         {
@@ -28,8 +26,6 @@ namespace GeneticAlgorithm
             this.generationCount = generationCount;
             this.random = new Random();
             this.bestFitnessHistory = new List<double>();
-            this.bestXHistory = new List<double>();
-            this.bestYHistory = new List<double>();
         }
 
         public void Solve()
@@ -53,8 +49,6 @@ namespace GeneticAlgorithm
                 }
 
                 bestFitnessHistory.Add(bestSolution.Fitness);
-                bestXHistory.Add(bestSolution.X);
-                bestYHistory.Add(bestSolution.Y);
 
                 List<Chromosome> elites = new List<Chromosome>();
                 for (int j = 0; j < eliteSize && j < population.Count; j++)
@@ -156,16 +150,6 @@ namespace GeneticAlgorithm
         public List<double> GetBestFitnessHistory()
         {
             return bestFitnessHistory;
-        }
-
-        public List<double> GetBestXHistory()
-        {
-            return bestXHistory;
-        }
-
-        public List<double> GetBestYHistory()
-        {
-            return bestYHistory;
         }
 
         private double CalculateFitness(double x, double y)
