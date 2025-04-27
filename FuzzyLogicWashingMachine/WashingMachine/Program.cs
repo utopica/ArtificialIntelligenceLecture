@@ -1,4 +1,4 @@
-namespace Form
+namespace WashingMachine
 {
     internal static class Program
     {
